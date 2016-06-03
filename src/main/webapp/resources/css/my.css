@@ -1,0 +1,7 @@
+@CHARSET "ISO-8859-1";
+
+h1{
+	text-decoration: underline;
+	background: red;
+	color:#DD2727;
+}

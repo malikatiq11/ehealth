@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<context:component-scan base-package="com.ehealth.controller" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:annotation-driven />
+	
+	<context:property-placeholder location="classpath:database.properties" />
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.ehealth.model.Department</value>
+				<value>com.ehealth.model.Doctor</value>
+				<value>com.ehealth.model.PatientVisit</value>
+				<value>com.ehealth.model.Treatment</value>
+				<value>com.ehealth.model.City</value>
+				<value>com.ehealth.model.Patient</value>
+				<value>com.ehealth.model.Country</value>
+				<value>com.ehealth.model.Religion</value>
+				<value>com.ehealth.model.Language</value>
+				<value>com.ehealth.model.State</value>
+				<value>com.ehealth.model.NationalityCitizenship</value>
+				<value>com.ehealth.model.RequestPanel</value>
+				<value>com.ehealth.model.Staff</value>		
+				<value>com.ehealth.model.RquestPatientVisit</value>	
+				<value>com.ehealth.model.DoctorPanel</value>
+				<value>com.ehealth.model.Roles</value>		
+				<value>com.ehealth.model.DoctorsPa</value>	
+				<value>com.ehealth.model.Registration</value>	
+				<value>com.ehealth.model.Admin</value>	
+				<value>com.ehealth.model.LaboratoryHL7Message</value>	
+				<value>com.ehealth.model.Appointment</value>	
+				<value>com.ehealth.model.MobPatient</value>	
+				
+				
+				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100097152" />
+    </bean>
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean id="dataDaoImpl" class="com.ehealth.dao.DepartmentDAOImpl" />
+	<bean id="doctorDaoImpl" class="com.ehealth.dao.DoctorDAOImpl" />
+	<bean id="patientVisitDaoImpl" class="com.ehealth.dao.PatientVisitDAOImpl" />
+	<bean id="treatmentDaoimlp" class="com.ehealth.dao.TreatmentDAOImpl" />
+		<bean id="patientDaoimlp" class="com.ehealth.dao.PatientDAOImpl" />
+		<bean id="countryDaoimlp" class="com.ehealth.dao.CountryDAOImpl" />
+		<bean id="stateDaoimlp" class="com.ehealth.dao.StateDAOImpl" />
+		<bean id="cityDaoimlp" class="com.ehealth.dao.CityDAOImpl" />
+	
+		<bean id="religionDaoimlp" class="com.ehealth.dao.ReligionDAOImpl" />
+		<bean id="languageDaoimlp" class="com.ehealth.dao.LanguageDAOImpl" />
+		<bean id="ncDaoimlp" class="com.ehealth.dao.NCDAOImpl" />
+			<bean id="ReqDaoimlp" class="com.ehealth.dao.RequestPanelDAOImpl" />
+			<bean id="staffDaoImpl" class="com.ehealth.dao.StaffDAOImpl" />
+				<bean id="rquestpatientvisidaoimpl" class="com.ehealth.dao.RquestPatientVisitDAOImpl" />
+					<bean id="doctorpaneldaiimpl" class="com.ehealth.dao.DoctorPanelDAOImpl" />
+					<bean id="rolesdaoimpl" class="com.ehealth.dao.RolesDAOImpl" />
+				<bean id="doctorsdaoimpl" class="com.ehealth.dao.DoctorsPaDAOImpl" />
+				<bean id="registrationdaoimpl" class="com.ehealth.dao.RegistrationDAOImpl" />
+					<bean id="admindaoimpl" class="com.ehealth.dao.AdminDAOImpl" />
+					<bean id="laboratoryHL7MessageDAOImpl" class="com.ehealth.dao.LaboratoryHL7MessageDAOImpl" />
+								<bean id="aapointmentdaoimpl" class="com.ehealth.dao.AppointmentDAOImpl" />
+					<bean id="mobpatientdaoimpl" class="com.ehealth.dao.MobPatientDAOImpl" />
+	
+</beans>
+
+	
